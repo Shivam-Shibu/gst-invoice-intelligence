@@ -66,6 +66,13 @@ def render_styles() -> None:
             border: 1px solid #d8e0ea;
             border-radius: 8px;
             box-shadow: 0 18px 48px rgba(28,55,80,.12);
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+        }
+        .login-visual:hover,
+        .login-panel:hover {
+            transform: translateY(-4px);
+            border-color: rgba(144, 225, 184, .52);
+            box-shadow: 0 24px 64px rgba(16, 27, 38, .22);
         }
         .login-visual {
             position: relative;
@@ -124,6 +131,11 @@ def render_styles() -> None:
             background: rgba(255,255,255,.08);
             backdrop-filter: blur(10px);
             padding: .75rem;
+            transition: transform .2s ease, border-color .2s ease, background .2s ease;
+        }
+        .security-card:hover {
+            transform: translateX(6px) scale(1.015);
+            background: rgba(255,255,255,.13);
         }
         .security-card:nth-child(1) {
             border-color: rgba(79, 178, 128, .34);
@@ -171,6 +183,11 @@ def render_styles() -> None:
             background: linear-gradient(145deg, rgba(14, 21, 28, .78), rgba(31, 48, 58, .66));
             padding: .95rem;
             box-shadow: 0 12px 34px rgba(8, 15, 22, .22);
+            transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+        }
+        div[data-testid="stForm"]:hover {
+            border-color: rgba(144, 225, 184, .38);
+            box-shadow: 0 16px 42px rgba(8, 15, 22, .3);
         }
         div[data-testid="stForm"] label,
         div[data-testid="stForm"] p {
@@ -183,6 +200,13 @@ def render_styles() -> None:
             background: linear-gradient(135deg, #eff8f3, #edf4ff);
             border: 1px solid #9fc3b2;
             border-radius: 8px;
+            transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+        }
+        div[data-baseweb="input"] > div:hover,
+        div[data-baseweb="input"] > div:focus-within {
+            transform: translateY(-1px);
+            border-color: #1d6f5b;
+            box-shadow: 0 0 0 3px rgba(29,111,91,.14);
         }
         div[data-baseweb="input"] input {
             color: #102033;
@@ -214,6 +238,12 @@ def render_styles() -> None:
             grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
             gap: 1.2rem;
             align-items: center;
+            transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease;
+        }
+        .gst-hero:hover {
+            transform: translateY(-3px);
+            border-color: #b7cddd;
+            box-shadow: 0 26px 70px rgba(28, 55, 80, .16);
         }
         .gst-hero::before {
             content: "";
@@ -262,6 +292,13 @@ def render_styles() -> None:
             padding: .42rem .7rem;
             font-size: .84rem;
             font-weight: 650;
+            transition: transform .18s ease, background .18s ease, color .18s ease, border-color .18s ease;
+        }
+        .hero-pill:hover {
+            transform: translateY(-2px);
+            background: #172033;
+            color: #f8fbff;
+            border-color: #172033;
         }
         .hero-visual {
             height: 230px;
@@ -349,6 +386,11 @@ def render_styles() -> None:
             font-weight: 720;
             box-shadow: 0 10px 30px rgba(20,32,51,.10);
             animation: chipFloat 4s ease-in-out infinite;
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+        .floating-chip:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 16px 38px rgba(20,32,51,.18);
         }
         .floating-chip.gstin { left: 12px; top: 18px; }
         .floating-chip.tax { right: 0; bottom: 28px; animation-delay: .7s; }
@@ -389,7 +431,7 @@ def render_styles() -> None:
             background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(243,246,255,.94));
         }
         .guide-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-6px) scale(1.012);
             border-color: #b9cadb;
             box-shadow: 0 12px 32px rgba(20, 32, 51, .09);
         }
@@ -435,7 +477,7 @@ def render_styles() -> None:
             background: linear-gradient(150deg, rgba(255,255,255,.95), rgba(243,241,255,.93));
         }
         .metric-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-5px) scale(1.01);
             box-shadow: 0 10px 28px rgba(20,32,51,.08);
         }
         .metric-label {
@@ -471,6 +513,11 @@ def render_styles() -> None:
             padding: .9rem;
             margin: .7rem 0 1rem 0;
             box-shadow: 0 8px 24px rgba(20,32,51,.05);
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        }
+        .sidebar-panel:hover {
+            transform: translateX(4px);
+            box-shadow: 0 14px 34px rgba(20,32,51,.1);
         }
         .sidebar-panel.engine-panel {
             border-color: #b8d8ce;
@@ -506,6 +553,11 @@ def render_styles() -> None:
             padding: .55rem .62rem;
             margin-top: .45rem;
             background: linear-gradient(90deg, #fbfdff, #f4fbf7);
+            transition: transform .18s ease, box-shadow .18s ease;
+        }
+        .status-row:hover {
+            transform: translateX(4px);
+            box-shadow: 0 8px 18px rgba(20,32,51,.08);
         }
         .status-row.tesseract-row {
             border-color: #b8ddcd;
@@ -547,6 +599,11 @@ def render_styles() -> None:
             color: #344357;
             font-size: .75rem;
             font-weight: 720;
+            transition: transform .16s ease, box-shadow .16s ease;
+        }
+        .file-chip:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 8px 18px rgba(20,32,51,.12);
         }
         .file-chip.pdf {
             border-color: #f0c0b8;
@@ -591,6 +648,10 @@ def render_styles() -> None:
             color: #4d5c6d;
             font-size: .82rem;
             line-height: 1.35;
+            transition: transform .16s ease;
+        }
+        .tip-item:hover {
+            transform: translateX(4px);
         }
         .tip-icon {
             display: grid;
@@ -622,6 +683,7 @@ def render_styles() -> None:
         }
         div[data-testid="stFileUploader"] section:hover {
             border-color: #1d6f5b;
+            box-shadow: 0 14px 34px rgba(29,111,91,.12);
         }
         .workspace-panel {
             border: 1px solid #dce4ed;
@@ -630,6 +692,21 @@ def render_styles() -> None:
             background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(241,248,255,.88));
             margin-top: .75rem;
             box-shadow: 0 12px 32px rgba(28,55,80,.08);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .workspace-panel:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 48px rgba(28,55,80,.13);
+        }
+        .stButton > button,
+        .stDownloadButton > button {
+            transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+        }
+        .stButton > button:hover,
+        .stDownloadButton > button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(20,32,51,.14);
+            filter: saturate(1.08);
         }
         div[data-testid="stDataFrame"] {
             border: 1px solid #dce4ed;
