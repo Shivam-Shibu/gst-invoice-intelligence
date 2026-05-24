@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.py[cod]
+.streamlit/
+
+uploads/*
+!uploads/.gitkeep
+
+outputs/*
+!outputs/.gitkeep
+
+models/*
+!models/.gitkeep
