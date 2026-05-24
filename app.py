@@ -20,6 +20,7 @@ from src.exporter import export_dataframe, to_download_bytes
 from src.extractor import extract_invoice_fields
 from src.file_handler import load_document_pages, save_uploaded_file
 from src.ocr import OcrEngine
+from src.otp_delivery import send_otp
 from src.preprocessing import preprocess_image
 from src.utils import configure_logging, format_currency
 from src.validator import validate_gstin
@@ -164,6 +165,16 @@ def render_styles() -> None:
             padding: .75rem;
             margin: .75rem 0;
             font-size: .9rem;
+        }
+        .delivery-box {
+            border: 1px solid #b8d8ce;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #eefbf4, #eef5ff);
+            color: #1f4438;
+            padding: .75rem;
+            margin: .75rem 0;
+            font-size: .9rem;
+            line-height: 1.42;
         }
         div[data-testid="stForm"] {
             border: 1px solid rgba(255,255,255,.15);
@@ -815,26 +826,45 @@ def render_login_page() -> bool:
                 st.error(message)
             else:
                 challenge = create_otp_challenge(email, phone)
+                delivery = send_otp(challenge)
                 st.session_state["otp_challenge"] = challenge
+                st.session_state["otp_delivery"] = delivery
                 st.session_state["pending_identity"] = {
                     "email": challenge.email,
                     "phone": challenge.phone,
                 }
-                st.success(
-                    f"Demo OTP generated for {mask_email(challenge.email)} and mobile {mask_phone(challenge.phone)}."
-                )
+                if delivery.email_sent or delivery.sms_sent:
+                    st.success(delivery.message)
+                elif delivery.demo_enabled:
+                    st.warning("Real OTP delivery is not configured. Demo OTP fallback is enabled.")
+                else:
+                    st.error("OTP could not be sent. Add SMTP or Twilio secrets in Streamlit Cloud settings.")
 
         challenge = st.session_state.get("otp_challenge")
         if challenge:
-            st.markdown(
-                f"""
-                <div class="otp-box">
-                    Demo OTP: <strong>{challenge.otp}</strong><br>
-                    This OTP expires in {OTP_TTL_MINUTES} minutes. Real email/SMS delivery can be connected later.
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+            delivery = st.session_state.get("otp_delivery")
+            if delivery:
+                st.markdown(
+                    f"""
+                    <div class="delivery-box">
+                        <strong>Delivery status</strong><br>
+                        Email: {"Sent" if delivery.email_sent else "Not sent"}<br>
+                        SMS: {"Sent" if delivery.sms_sent else "Not sent"}<br>
+                        {delivery.message}
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+            if delivery and delivery.demo_enabled and not (delivery.email_sent or delivery.sms_sent):
+                st.markdown(
+                    f"""
+                    <div class="otp-box">
+                        Demo OTP: <strong>{challenge.otp}</strong><br>
+                        This fallback is visible only because DEMO_OTP is enabled.
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
             with st.form("otp_verify_form"):
                 entered_otp = st.text_input("Enter OTP", max_chars=6, placeholder="6-digit OTP")
                 verified = st.form_submit_button("Verify and continue", type="primary", use_container_width=True)
