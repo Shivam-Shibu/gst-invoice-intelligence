@@ -836,7 +836,7 @@ def render_login_page() -> bool:
                 if delivery.email_sent or delivery.sms_sent:
                     st.success(delivery.message)
                 elif delivery.demo_enabled:
-                    st.warning("Real OTP delivery is not configured. Demo OTP fallback is enabled.")
+                    st.warning("Real OTP delivery is not configured yet, so demo OTP is enabled for login testing.")
                 else:
                     st.error("OTP could not be sent. Add SMTP or Twilio secrets in Streamlit Cloud settings.")
 
@@ -860,7 +860,7 @@ def render_login_page() -> bool:
                     f"""
                     <div class="otp-box">
                         Demo OTP: <strong>{challenge.otp}</strong><br>
-                        This fallback is visible only because DEMO_OTP is enabled.
+                        This fallback is visible because real email/SMS OTP is not configured yet.
                     </div>
                     """,
                     unsafe_allow_html=True,

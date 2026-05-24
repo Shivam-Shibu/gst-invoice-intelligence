@@ -25,11 +25,12 @@ class DeliveryResult:
 def send_otp(challenge: OtpChallenge) -> DeliveryResult:
     email_sent, email_message = _send_email_otp(challenge)
     sms_sent, sms_message = _send_sms_otp(challenge)
-    demo_enabled = _get_setting("DEMO_OTP", "false").lower() in {"1", "true", "yes", "on"}
+    demo_setting = _get_setting("DEMO_OTP", "auto").lower()
+    demo_enabled = demo_setting in {"1", "true", "yes", "on", "auto"} and not (email_sent or sms_sent)
 
     messages = [message for message in (email_message, sms_message) if message]
     if not email_sent and not sms_sent and demo_enabled:
-        messages.append("Demo OTP fallback is enabled.")
+        messages.append("Demo OTP fallback is enabled because no real OTP provider is configured.")
 
     return DeliveryResult(
         email_sent=email_sent,
